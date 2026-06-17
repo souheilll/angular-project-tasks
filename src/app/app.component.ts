@@ -13,7 +13,7 @@ import { TasksComponent } from './tasks/tasks.component';
 })
 export class AppComponent implements OnInit {
    users=DUMMY_USERS
-   selectedUserId!:string
+   selectedUserId?:string
    ngOnInit(): void {
      console.log(this.users)
    }
