@@ -3,6 +3,7 @@ import { TaskComponent } from './task/task.component';
 import { dummyTasks } from './dummy-tasks';
 import { NewTask, Task } from './models/task.interface';
 import { NewTaskComponent } from './new-task/new-task.component';
+import { TasksService } from './tasks.service';
 
 @Component({
   selector: 'app-tasks',
@@ -17,26 +18,19 @@ isAddingTask:boolean=false
 @Input({required:true}) name!:string
 @Input({required:true}) userId!:string
 
+  constructor(private tasksService:TasksService) { }
+
+
 get SelectedUserTasks(){
-  return this.tasks.filter((task)=>task.userId===this.userId)
+ return  this.tasksService.getUserTasks(this.userId)
 }
-onCompleteTask(taskId:string){
-this.tasks=this.tasks.filter((task)=>task.id!==taskId)
-}
+
 onAdd(){
 this.isAddingTask=true
 }
+
 onCancelAddTask(){
   this.isAddingTask=false
 }
-onAddTask(newTask:NewTask){
-this.tasks.unshift({
-  id:new Date().getTime().toString(),
-  userId:this.userId,
-  title:newTask.title,
-  summary:newTask.summary,
-  dueDate:newTask.dueDate
-})
-this.isAddingTask=false
-}
+
 }
